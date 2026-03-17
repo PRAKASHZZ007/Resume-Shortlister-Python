@@ -1,53 +1,56 @@
-import os
+
 import PyPDF2
 import docx
 
+
 # -------- Function to read PDF or DOCX --------
-def read_file(file_path):
+def read_file(file):
     text = ""
 
-    if file_path.endswith(".pdf"):
-        pdf = open(file_path, "rb")
-        reader = PyPDF2.PdfReader(pdf)
-        for page in reader.pages:
-            text += page.extract_text()
-        pdf.close()
+    if file.name.endswith(".pdf"):
+        reader = PyPDF2.PdfReader(file)
 
-    elif file_path.endswith(".docx"):
-        doc = docx.Document(file_path)
+        for page in reader.pages:
+            page_text = page.extract_text()
+            if page_text:
+                text += page_text
+
+    elif file.name.endswith(".docx"):
+        doc = docx.Document(file)
+
         for para in doc.paragraphs:
             text += para.text
 
     return text.lower()
 
-# -------- Read skills --------
-skills = []
-with open("skills.txt", "r") as f:
-    for line in f:
-        skills.append(line.strip().lower())
 
-# -------- Read Job Description (TXT FIX) --------
-with open("job_description.txt", "r") as f:
-    jd_text = f.read().lower()
+# -------- Main Function --------
+def process_resume(uploaded_file):
 
-jd_skills = []
-for skill in skills:
-    if skill in jd_text:
-        jd_skills.append(skill)
+    # -------- Read requirements --------
+    requirements = []
 
-# -------- Process resumes --------
-print("\n📄 Resume Shortlisting Results\n")
+    with open("requirements.txt", "r") as f:
+        for line in f:
+            requirements.append(line.strip().lower())
 
-for resume in os.listdir("resumes"):
-    resume_text = read_file("resumes/" + resume)
+    # -------- Resume text --------
+    resume_text = read_file(uploaded_file)
 
-    matched = 0
-    for skill in jd_skills:
+    matched_skills = []
+    missing_skills = []
+
+    for skill in requirements:
         if skill in resume_text:
-            matched += 1
+            matched_skills.append(skill)
+        else:
+            missing_skills.append(skill)
 
-    if len(jd_skills) > 0:
-        percentage = (matched / len(jd_skills)) * 100
+    matched = len(matched_skills)
+    total = len(requirements)
+
+    if total > 0:
+        percentage = (matched / total) * 100
     else:
         percentage = 0
 
@@ -58,8 +61,4 @@ for resume in os.listdir("resumes"):
     else:
         status = "REJECTED ❌"
 
-    print("Resume Name   :", resume)
-    print("Skills Match  :", matched, "/", len(jd_skills))
-    print("Match %      :", percentage)
-    print("Status       :", status)
-    print("-" * 35)
+    return matched, total, percentage, status, matched_skills, missing_skills

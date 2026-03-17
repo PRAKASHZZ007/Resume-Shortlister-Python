@@ -1,0 +1,6 @@
+python
+sql
+flask
+rest api
+react
+javascript

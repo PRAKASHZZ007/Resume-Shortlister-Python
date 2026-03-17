@@ -1,5 +1,0 @@
-python
-sql
-flask
-api
-data analysis
