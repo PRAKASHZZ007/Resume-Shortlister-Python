@@ -30,7 +30,7 @@ def process_resume(uploaded_file):
     # -------- Read requirements --------
     requirements = []
 
-    with open("requirements.txt", "r") as f:
+    with open("requirements_skills.txt", "r") as f:
         for line in f:
             requirements.append(line.strip().lower())
 

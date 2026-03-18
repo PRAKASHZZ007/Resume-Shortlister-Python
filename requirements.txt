@@ -1,6 +1,3 @@
-python
-sql
-flask
-rest api
-react
-javascript
+streamlit
+PyPDF2
+python-docx
