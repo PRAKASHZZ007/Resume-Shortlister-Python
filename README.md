@@ -1,27 +1,33 @@
-# Resume Shortlister (Python)
+📄 Mini ATS - Resume Screening App
 
-A simple Python project that automatically shortlists resumes by matching skills with a job description.
+A simple Applicant Tracking System (ATS) built using Python + Streamlit that helps screen resumes based on required skills.
 
-## Technologies Used
-- Python
-- PyPDF2 (to read PDF resumes)
-- python-docx (to read DOCX resumes)
-- Text files (skills and job description)
-- Basic string matching logic
+🚀 Features
 
-## What This Project Does
-This project helps to reduce manual work in resume screening.  
-It checks whether a candidate’s resume contains the required skills for a job and gives a match percentage.
+📂 Upload multiple resumes (PDF / DOCX)
 
-## How to Use (Simple Explanation)
+🧠 Automatically extract text
 
-1. Add all required job skills in the `skills.txt` file  
-   (Example: python, react, sql)
+🔍 Match resume skills with job requirements
 
-2. Paste the full job description in the `job_description.txt` file
+📊 Show:
 
-3. Place all candidate resumes (PDF or DOCX) inside the `resumes/` folder
+Skills match count
 
-4. Run the Python script:
-```bash
-python main.py
+Match percentage
+
+Shortlisted / Rejected status
+
+✅ Displays matched skills
+
+❌ Displays missing skills
+
+🛠️ Tech Stack
+
+Python
+
+Streamlit
+
+PyPDF2
+
+python-docx
